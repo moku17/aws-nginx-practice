@@ -930,6 +930,8 @@ journalctl -u nginx -f
 ・journalctl
 
 
+------
+
 🇰🇷[KOR]
 # AWS EC2 + nginx 서버 구축 연습
 
