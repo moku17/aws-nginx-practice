@@ -1483,9 +1483,9 @@ Dockerはアプリケーションを実行するために必要な環境をま�
 
 Dockerを利用することで、開発環境と本番環境を同じ状態で再現できる。
 
-⸻
+---
 
-64. Dockerとは
+## 64. Dockerとは
 
 Dockerはコンテナを作成・管理するためのプラットフォームである。
 
@@ -1493,9 +1493,9 @@ Docker自体がアプリケーションを実行するのではなく、コン�
 
 イメージからコンテナを作成し、実行・停止・削除を行うことができる。
 
-⸻
+---
 
-65. ImageとContainer
+## 65. ImageとContainer
 
 Dockerを理解する上で最も重要な概念。
 
@@ -1509,7 +1509,8 @@ Imageはアプリケーションを実行するための設計図である。
 
 nginx Image
 
-⸻
+---
+
 
 Container
 
@@ -1521,7 +1522,8 @@ Imageから複数のContainerを作成することができる。
 
 nginx Container
 
-⸻
+---
+
 
 学んだこと
 
@@ -1529,9 +1531,9 @@ Image = 設計図
 
 Container = 設計図から作られた実行中の実体
 
-⸻
+---
 
-66. docker pull
+## 66. docker pull
 
 使用したコマンド：
 
@@ -1547,9 +1549,9 @@ Docker Hubからnginx Imageをダウンロードする。
 
 Containerを作成する前にImageが必要である。
 
-⸻
+---
 
-67. docker images
+## 67. docker images
 
 使用したコマンド：
 
@@ -1563,9 +1565,9 @@ docker images
 
 現在どのImageを持っているか確認するため。
 
-⸻
+---
 
-68. docker run
+## 68. docker run
 
 使用したコマンド：
 
@@ -1595,9 +1597,9 @@ EC2の8080番ポートとContainer内の80番ポートを接続する。
 
 Container内部と外部サーバーのポートは別である。
 
-⸻
+---
 
-69. docker ps
+## 69. docker ps
 
 使用したコマンド：
 
@@ -1611,9 +1613,9 @@ docker ps
 
 Linuxのpsコマンドと似ているが、Docker Container専用のコマンドである。
 
-⸻
+---
 
-70. docker ps の結果を読む
+## 70. docker ps の結果を読む
 
 例：
 
@@ -1667,9 +1669,9 @@ NAMES
 
 Dockerが自動生成したContainer名
 
-⸻
+---
 
-71. docker stop
+## 71. docker stop
 
 使用したコマンド：
 
@@ -1683,9 +1685,9 @@ docker stop コンテナ名
 
 Containerを停止してもImageは削除されない。
 
-⸻
+---
 
-72. docker start
+## 72. docker start
 
 使用したコマンド：
 
@@ -1695,9 +1697,9 @@ docker start コンテナ名
 
 停止中のContainerを再度実行する。
 
-⸻
+---
 
-73. docker ps -a
+## 73. docker ps -a
 
 使用したコマンド：
 
@@ -1711,9 +1713,9 @@ docker ps -a
 
 Containerは停止しても削除されるわけではない。
 
-⸻
+---
 
-74. docker rm
+## 74. docker rm
 
 使用したコマンド：
 
@@ -1727,9 +1729,9 @@ Containerを削除する。
 
 Containerを削除してもImageは残る。
 
-⸻
+---
 
-75. Dockerで最も重要な理解
+## 75. Dockerで最も重要な理解
 
 今回の学習で理解したこと。
 
@@ -1741,9 +1743,9 @@ Containerは実際に動作する実体。
 
 Containerを削除してもImageは残るため、同じImageから何度でも新しいContainerを作成できる。
 
-⸻
+---
 
-今回学んだ内容
+## 今回学んだ内容
 
 ・Dockerの目的
 
@@ -1772,6 +1774,8 @@ Containerを削除してもImageは残るため、同じImageから何度でも�
 ・ポートマッピング（8080:80）
 
 ・ImageとContainerの違い
+
+
 ---
 
 🇰🇷[KOR]
@@ -3252,7 +3256,7 @@ localhost에서는 접속할 수 있어도, 외부 브라우저로부터 접속�
 
 ---
 
-63. Docker를 배우는 이유
+## 63. Docker를 배우는 이유
 
 Docker는 응용 프로그램을 실행하는 데 필요한 환경을 함께 패키징하고 어디서나 동일한 방식으로 실행할 수 있도록하는 기술입니다.
 
@@ -3260,9 +3264,9 @@ Docker는 응용 프로그램을 실행하는 데 필요한 환경을 함께 패
 
 Docker를 이용함으로써 개발 환경과 프로덕션 환경을 같은 상태로 재현할 수 있다.
 
-⸻
+---
 
-64. Docker란?
+## 64. Docker란?
 
 Docker는 컨테이너를 만들고 관리하기 위한 플랫폼이다.
 
@@ -3270,9 +3274,9 @@ Docker 자체가 어플리케이션을 실행하는 것이 아니라, 컨테이�
 
 이미지에서 컨테이너를 만들고 실행, 중지 및 삭제할 수 있습니다.
 
-⸻
+---
 
-65. Image와 Container
+## 65. Image와 Container
 
 Docker를 이해하는 가장 중요한 개념.
 
@@ -3286,7 +3290,8 @@ Image는 애플리케이션을 실행하기 위한 설계도이다.
 
 nginx 이미지
 
-⸻
+---
+
 
 Container
 
@@ -3298,7 +3303,8 @@ Image에서 여러 Container를 만들 수 있습니다.
 
 nginx Container
 
-⸻
+---
+
 
 배운 것
 
@@ -3306,9 +3312,9 @@ Image = 설계도
 
 Container = 설계도로 만든 실행중인 엔티티
 
-⸻
+---
 
-66. docker pull
+## 66. docker pull
 
 사용한 명령:
 
@@ -3324,9 +3330,9 @@ Docker Hub에서 nginx Image를 다운로드합니다.
 
 Container를 만들기 전에 Image가 필요합니다.
 
-⸻
+---
 
-67. docker images
+## 67. docker images
 
 사용한 명령:
 
@@ -3340,9 +3346,9 @@ docker images
 
 현재 어느 Image가 있는지 확인하기 위하여.
 
-⸻
+---
 
-68. docker run
+## 68. docker run
 
 사용한 명령:
 
@@ -3372,9 +3378,9 @@ EC2의 8080번 포트와 Container 내의 80번 포트를 연결한다.
 
 Container 내부와 외부 서버의 포트는 다르다.
 
-⸻
+---
 
-69. docker ps
+## 69. docker ps
 
 사용한 명령:
 
@@ -3388,9 +3394,9 @@ docker ps
 
 Linux의 ps 명령과 비슷하지만 Docker Container 전용 명령입니다.
 
-⸻
+---
 
-70. docker ps 결과 읽기
+## 70. docker ps 결과 읽기
 
 예:
 
@@ -3444,9 +3450,9 @@ NAMES
 
 Docker가 자동으로 생성한 Container 이름
 
-⸻
+---
 
-71. docker stop
+## 71. docker stop
 
 사용한 명령:
 
@@ -3460,9 +3466,9 @@ docker stop 컨테이너 이름
 
 Container를 중지해도 Image는 삭제되지 않는다.
 
-⸻
+---
 
-72. docker start
+## 72. docker start
 
 사용한 명령:
 
@@ -3472,9 +3478,9 @@ docker start 컨테이너 이름
 
 중지된 Container를 다시 실행합니다.
 
-⸻
+---
 
-73. docker ps -a
+## 73. docker ps -a
 
 사용한 명령:
 
@@ -3488,9 +3494,9 @@ docker ps -a
 
 Container는 정지해도 삭제되는 것은 아니다.
 
-⸻
+---
 
-74. docker rm
+## 74. docker rm
 
 사용한 명령:
 
@@ -3504,9 +3510,9 @@ Container를 삭제합니다.
 
 Container를 삭제해도 Image는 남는다.
 
-⸻
+---
 
-75. Docker에서 가장 중요한 이해
+## 75. Docker에서 가장 중요한 이해
 
 이번 학습으로 이해한 것.
 
@@ -3518,9 +3524,9 @@ Container는 실제로 동작하는 실체.
 
 Container를 삭제해도 Image는 남아 있기 때문에, 같은 Image로부터 몇번이라도 새로운 Container를 작성할 수 있다.
 
-⸻
+---
 
-이번에 배운 내용
+## 이번에 배운 내용
 
 · 도커의 목적
 
