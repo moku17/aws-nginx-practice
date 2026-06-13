@@ -1772,8 +1772,6 @@ Containerを削除してもImageは残るため、同じImageから何度でも�
 ・ポートマッピング（8080:80）
 
 ・ImageとContainerの違い
-
-
 ---
 
 🇰🇷[KOR]
