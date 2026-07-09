@@ -3878,3 +3878,323 @@ Container를 삭제해도 Image는 남아 있기 때문에, 같은 Image로부�
 ・포트 매핑(8080:80)
 
 · Image와 Container의 차이
+
+---
+
+# 76. Dockerfile이란
+
+Dockerfile은 Docker에 “어떤 환경을 만들지”를 지시하기 위한 설정 파일이다.
+
+Dockerfile에는 사용할 Image, 작업 디렉터리, 복사할 파일, 실행할 명령어 등을 순서대로 기록한다.
+
+Docker는 Dockerfile을 위에서부터 순서대로 읽어들여 Image를 생성한다.
+
+---
+
+# 77. FROM
+
+사용한 내용
+
+FROM node:18
+
+## 의미
+
+FROM은 “~를 기반으로 한다”는 의미.
+
+Node.js 18이 설치된 Image를 기반으로 새로운 Image를 생성한다.
+
+## 배운 점
+
+Node.js를 처음부터 설치할 필요 없이 Docker Hub에 있는 공식 Image를 이용할 수 있다.
+
+---
+
+# 78. WORKDIR
+
+사용한 내용
+
+WORKDIR /app
+
+## 의미
+
+Container 안에서 작업할 디렉터리를 지정한다.
+
+존재하지 않을 경우 자동으로 생성된다.
+
+## 배운 점
+
+이후의 COPY나 CMD 등은 이 디렉터리를 기준으로 실행된다.
+
+Linux의 “cd /app”와 비슷한 역할을 한다.
+
+---
+
+# 79. COPY
+
+사용한 내용
+
+COPY server.js .
+
+## 의미
+
+EC2에 있는 server.js를 Container 안의 현재 작업 디렉터리(/app)로 복사한다.
+
+## 배운 점
+
+Container는 EC2와 별개의 환경이므로, 필요한 파일을 Container 안으로 복사해야 한다.
+
+COPY는 이동이 아니라 복사이다.
+
+---
+
+# 80. EXPOSE
+
+사용한 내용
+
+EXPOSE 3000
+
+## 의미
+
+이 Container가 3000번 포트를 사용한다는 것을 Docker에 알린다.
+
+## 배운 점
+
+EXPOSE는 포트를 개방하는 명령이 아니다.
+
+Container가 사용하는 포트 정보를 기록하기 위한 설정이다.
+
+실제로 외부에 공개하려면 -docker run 옵션이 필요하다.
+
+---
+
+# 81. CMD
+
+사용한 내용
+
+CMD ["node", "server.js"]
+
+## 의미
+
+Container가 시작될 때 실행할 명령을 지정한다.
+
+## 배운 점
+
+Container를 실행한 뒤 자동으로
+
+node server.js
+
+가 실행된다.
+
+Docker는 CMD에 적힌 내용을 마지막으로 실행해 애플리케이션을 시작한다.
+
+---
+
+# 82. Dockerfile 흐름
+
+이번에 만든 Dockerfile
+
+FROM node:18
+
+WORKDIR /app
+
+COPY server.js .
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+
+## 배운 점
+
+Docker는 위에서부터 순서대로 실행한다.
+
+① Node.js 18의 Image를 준비한다
+
+↓
+
+② /app 디렉터리를 만든다
+
+↓
+
+③ server.js를 /app에 복사한다
+
+↓
+
+④ 3000번 포트를 사용하고 있음을 기록한다
+
+↓
+
+⑤ Container를 시작할 때 node server.js를 실행한다
+
+---
+
+# 83. docker build
+
+사용한 명령어
+
+docker build -t my-node-app .
+
+## 의미
+
+Dockerfile을 읽어 새로운 Image를 생성한다.
+
+### build
+
+Image를 만든다.
+
+### -t
+
+‘tag’(이름)를 붙인다.
+
+### my-node-app
+
+이번에 만든 Image 이름.
+
+### .
+
+현재 디렉터리를 Build 대상에 포함한다.
+
+## 배운 점
+
+docker build에서는 Container가 생성되지 않는다.
+
+Dockerfile에서 Image만 생성된다.
+
+---
+
+# 84. Build Context
+
+Build 중에 표시된 내용
+
+Sending build context to Docker daemon
+
+## 의미
+
+현재 디렉터리에 있는 Dockerfile이나 server.js 등을 Docker로 전송한다.
+
+## 배운 점
+
+docker build 끝에 적는 “.”는 현재 디렉터리를 의미한다.
+
+Docker는 그 디렉터리 안의 파일을 이용해 Image를 생성한다.
+
+---
+
+# 85. Cache
+
+Build 중에 표시된 내용
+
+Using cache
+
+## 의미
+
+이는 이전에 실행한 결과를 재활용했다는 의미이다.
+
+## 배운 점
+
+Docker는 변경되지 않은 작업을 다시 실행하지 않는다.
+
+그 덕분에 Build 시간을 단축할 수 있다.
+
+---
+
+# 86. docker run
+
+사용한 명령어
+
+docker run -d -p 3000:3000 --name my-node-container my-node-app
+
+## 의미
+
+my-node-app Image에서 Container를 생성하고 실행한다.
+
+### run
+
+Image에서 Container를 생성하고 실행한다.
+
+### -d
+
+detached.
+
+백그라운드에서 실행한다.
+
+### -p 3000:3000
+
+EC2의 3000번 포트와 Container의 3000번 포트를 연결한다.
+
+### --name
+
+‘Container’에 이름을 붙인다.
+
+### my-node-container
+
+이번에 만든 Container 이름.
+
+### my-node-app
+
+사용할 Image명.
+
+## 배운 점
+
+docker run을 실행하면 새로운 Container가 생성된다.
+
+Image은 설계도이고, Container는 실제로 동작하는 실체이다.
+
+---
+
+# 87. 이번에 배운 Docker 전체 흐름
+
+Dockerfile 만들기
+
+↓
+
+docker build
+
+↓
+
+Image 제작
+
+↓
+
+docker run
+
+↓
+
+Container 생성·실행
+
+↓
+
+브라우저에서 접근
+
+↓
+
+Node.js 애플리케이션이 동작
+
+---
+
+# 이번에 배운 내용
+
+・Dockerfile
+
+· FROM
+
+・WORKDIR
+
+·COPY
+
+・EXPOSE
+
+· CMD
+
+・docker build
+
+・Build Context
+
+・Docker Cache
+
+・docker run
+
+· Image 생성
+
+· Container 생성
+
+· Node.js 애플리케이션의 Docker화
