@@ -1778,6 +1778,329 @@ Containerを削除してもImageは残るため、同じImageから何度でも�
 
 ---
 
+
+
+# 76. Dockerfileとは
+
+Dockerfileは、Dockerに「どのような環境を作るか」を指示するための設定ファイルである。
+
+Dockerfileには、使用するImage、作業ディレクトリ、コピーするファイル、実行するコマンドなどを順番に記述する。
+
+DockerはDockerfileを上から順番に読み込み、Imageを作成する。
+
+---
+
+# 77. FROM
+
+使用した内容
+
+FROM node:18
+
+## 意味
+
+FROMは「～を基にする」という意味。
+
+Node.js 18がインストールされたImageを基に、新しいImageを作成する。
+
+## 学んだこと
+
+Node.jsを一からインストールする必要はなく、Docker Hubにある公式Imageを利用できる。
+
+---
+
+# 78. WORKDIR
+
+使用した内容
+
+WORKDIR /app
+
+## 意味
+
+Container内で作業を行うディレクトリを指定する。
+
+存在しない場合は自動で作成される。
+
+## 学んだこと
+
+以降のCOPYやCMDなどは、このディレクトリを基準に実行される。
+
+Linuxの「cd /app」と同じような役割を持つ。
+
+---
+
+# 79. COPY
+
+使用した内容
+
+COPY server.js .
+
+## 意味
+
+EC2上にあるserver.jsをContainer内の現在の作業ディレクトリ（/app）へコピーする。
+
+## 学んだこと
+
+ContainerはEC2とは別の環境であるため、必要なファイルはContainer内へコピーする必要がある。
+
+COPYは移動ではなくコピーである。
+
+---
+
+# 80. EXPOSE
+
+使用した内容
+
+EXPOSE 3000
+
+## 意味
+
+このContainerが3000番ポートを利用することをDockerへ知らせる。
+
+## 学んだこと
+
+EXPOSEはポートを開放する命令ではない。
+
+Containerが利用するポート情報を記録するための設定である。
+
+実際に外部へ公開するためにはdocker runの-pオプションが必要になる。
+
+---
+
+# 81. CMD
+
+使用した内容
+
+CMD ["node", "server.js"]
+
+## 意味
+
+Containerが起動した時に実行するコマンドを指定する。
+
+## 学んだこと
+
+Container起動後、自動的に
+
+node server.js
+
+が実行される。
+
+DockerはCMDに書かれた内容を最後に実行してアプリケーションを起動する。
+
+---
+
+# 82. Dockerfileの流れ
+
+今回作成したDockerfile
+
+FROM node:18
+
+WORKDIR /app
+
+COPY server.js .
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+
+## 学んだこと
+
+Dockerは上から順番に実行する。
+
+① Node.js 18のImageを準備する
+
+↓
+
+② /appディレクトリを作成する
+
+↓
+
+③ server.jsを/appへコピーする
+
+↓
+
+④ 3000番ポートを利用することを記録する
+
+↓
+
+⑤ Container起動時にnode server.jsを実行する
+
+---
+
+# 83. docker build
+
+使用したコマンド
+
+docker build -t my-node-app .
+
+## 意味
+
+Dockerfileを読み込み、新しいImageを作成する。
+
+### build
+
+Imageを作成する。
+
+### -t
+
+tag（名前）を付ける。
+
+### my-node-app
+
+今回作成したImage名。
+
+### .
+
+現在のディレクトリをBuild対象にする。
+
+## 学んだこと
+
+docker buildではContainerは作成されない。
+
+DockerfileからImageだけが作成される。
+
+---
+
+# 84. Build Context
+
+Build中に表示された内容
+
+Sending build context to Docker daemon
+
+## 意味
+
+現在のディレクトリにあるDockerfileやserver.jsなどをDockerへ送信する。
+
+## 学んだこと
+
+docker buildの最後に書く「.」は現在のディレクトリを意味する。
+
+Dockerはそのディレクトリ内のファイルを利用してImageを作成する。
+
+---
+
+# 85. Cache
+
+Build中に表示された内容
+
+Using cache
+
+## 意味
+
+以前実行した結果を再利用したことを意味する。
+
+## 学んだこと
+
+Dockerは変更されていない処理を再実行しない。
+
+そのためBuild時間を短縮できる。
+
+---
+
+# 86. docker run
+
+使用したコマンド
+
+docker run -d -p 3000:3000 --name my-node-container my-node-app
+
+## 意味
+
+my-node-app ImageからContainerを作成し、実行する。
+
+### run
+
+ImageからContainerを作成して実行する。
+
+### -d
+
+detached。
+
+バックグラウンドで実行する。
+
+### -p 3000:3000
+
+EC2の3000番ポートとContainerの3000番ポートを接続する。
+
+### --name
+
+Containerに名前を付ける。
+
+### my-node-container
+
+今回作成したContainer名。
+
+### my-node-app
+
+使用するImage名。
+
+## 学んだこと
+
+docker runを実行すると、新しいContainerが作成される。
+
+Imageは設計図、Containerは実際に動作する実体である。
+
+---
+
+# 87. 今回学んだDocker全体の流れ
+
+Dockerfileを作成
+
+↓
+
+docker build
+
+↓
+
+Image作成
+
+↓
+
+docker run
+
+↓
+
+Container作成・実行
+
+↓
+
+ブラウザからアクセス
+
+↓
+
+Node.jsアプリケーションが動作
+
+---
+
+# 今回学んだ内容
+
+・Dockerfile
+
+・FROM
+
+・WORKDIR
+
+・COPY
+
+・EXPOSE
+
+・CMD
+
+・docker build
+
+・Build Context
+
+・Docker Cache
+
+・docker run
+
+・Image作成
+
+・Container作成
+
+・Node.jsアプリケーションのDocker化
+
+---
+
+
 🇰🇷[KOR]
 # AWS EC2 + nginx 서버 구축 연습
 
